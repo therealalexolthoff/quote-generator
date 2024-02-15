@@ -1,16 +1,30 @@
 const quoteContainer = document.getElementById('quote-container')
-const apiQuotes = [];
+let apiQuotes = [];
 const quoteText = document.getElementById('quote')
 const authorText = document.getElementById('author')
+const twitterButton = document.getElementById('twitter')
 
-// Add new quote DOM manipulation
+// Add Event Listeners
 document.getElementById('quote-changer').addEventListener('click', getNewQuote)
+
+twitterButton.addEventListener('click', tweet)
+
+// Twitter update function
+function tweet(){
+   const shareableQuote = `${author.textContent} said ${quoteText.textContent}`
+   const twitterURL = `https://twitter.com/intent/tweet?text=${shareableQuote}`
+    window.open(twitterURL, '_blank')
+}
+
 
 // Show New Quote
 function getNewQuote() {
   const quote = apiQuotes[Math.floor(Math.random() * apiQuotes.length)]
   quoteText.innerText = quote.text
-  authorText.innerText = quote.author
+  authorText.innerText = quote.author ? quote.author : "Unknown"
+
+//   Check quote length
+quote.text.length > 50 ?  quoteText.classList.add('long-quote'): quoteText.classList.remove('long-quote')
 }
 // Get Quotes From API
 async function getQuotes() {
@@ -18,9 +32,10 @@ async function getQuotes() {
     try {
         const response = await fetch(apiUrl)
         apiQuotes = await response.json()
+        getNewQuote()
     }
     catch (error){
-        console.log('error')
+        console.log(error)
     }
 
 }
