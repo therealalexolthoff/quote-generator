@@ -5,12 +5,12 @@ const authorText = document.getElementById('author')
 const twitterButton = document.getElementById('twitter')
 const loader = document.getElementById('loader')
 
-function loading() {
+function loadSpinner() {
     loader.hidden = false
     quoteContainer.hidden = true
 }
 
-function loadComplete() {
+function removeSpinner() {
     loader.hidden = true
     quoteContainer.hidden = false
 }
